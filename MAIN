@@ -1,0 +1,116 @@
+import re
+import numpy as np
+import random
+from ref import zzzref
+from randomread import randread
+from readposdiff import  readtq
+# from qiuhe import qiuhe
+from qiuhe import qiuhelong
+from qiuhe import qiuhesm
+
+myref, threename, refPOS, refdiff = zzzref("chr1")
+print("ref处理完毕")
+#####################################################################################################################
+ll=300
+random_pos,random_read=randread(myref,ll)
+print("random完毕")
+################################### 调整随机序列长度
+##################################################################################################随机序列生成完毕
+testPOS,testdiff=readtq(threename,random_read)
+print("test处理完毕")
+#############################################################
+
+
+
+agct = max(testdiff, key=lambda x: len(testdiff[x]))
+
+agct="AAA"
+
+reftest = {}
+for i in threename:
+    linshi = qiuhesm(refdiff[i], testdiff[i])
+    reftest[i] = linshi
+
+linshi = qiuhelong(refdiff[agct], testdiff[agct])
+reftest[agct] = linshi
+print("求和处理完毕")
+
+zhuanhuan = {}
+for i in threename:
+    zhuanhuan[i] = []
+for i in threename:
+    for j in reftest[i]:
+        ll = refPOS[i][int(j)]
+        zhuanhuan[i].append(ll)
+
+zhuanhuan[agct] = []
+for j in reftest[agct]:
+    ll = refPOS[agct][int(j)]
+    zhuanhuan[agct].append(ll)
+
+print("转换完毕")
+
+
+#
+# reftest={}
+# for i in threename:
+#     linshi=qiuhe(refdiff[i],testdiff[i])
+#     reftest[i]=linshi
+# print("求和处理完毕")
+#
+#
+# zhuanhuan={}
+# for i in threename:
+#     zhuanhuan[i] = []
+# for i in threename[1:]:
+#     for j in reftest[i]:
+#         ll=refPOS[i][int(j[1])]
+#         zhuanhuan[i].append(ll)
+#
+# for j in reftest[threename[0]]:
+#     ll = refPOS[threename[0]][int(j[0])]
+#     zhuanhuan[threename[0]].append(ll)
+#
+# print("转换完毕")
+
+
+
+def jiaoji(rrr1pos,rrr2pos):       #########需要调节范围
+    ll=300
+    r1result = []
+    for i in rrr1pos:
+        for j in rrr2pos:
+            if i>j:
+                continue
+            if j-i>ll+50:
+                continue
+            if j - i < ll+50:
+                r1result.append(i)
+
+    return r1result
+
+
+jjj={}
+for i in range(63):
+    aa=threename[0]
+    bb=threename[i+1]
+    linshi=jiaoji(zhuanhuan[aa],zhuanhuan[bb])
+    jjj[bb]=linshi
+jjj[aa]=[]
+print("交集处理完毕")
+
+
+zz=[]
+for i in jjj.keys():
+    th=list(set(jjj[i]))
+    zz = zz + th
+print("去重完毕")
+
+
+# print(f"列表中出现次数最多的元素是：{max(zz, key=zz.count)} ，总出现次数：{zz.count(max(zz, key=zz.count))}")
+#
+
+from collections import  Counter
+ccc=Counter(zz)
+
+print(ccc.most_common())
