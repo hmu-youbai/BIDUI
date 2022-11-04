@@ -1,0 +1,258 @@
+import numpy as np
+def ziji1(lll,ref_diff,he):
+    bbb={}
+    for i in range(lll):
+        bbb[str(i)] = np.array(ref_diff[i:len(ref_diff) - lll + i])
+    gg = np.zeros(len(ref_diff) - lll, int)
+    for k in bbb.keys():
+        gg = gg + bbb[k]
+    gg2=np.where((he + 5 > gg)& (gg> he - 5))[0]
+    return gg2
+
+
+
+def ziji2(lll,ref_diff,he):
+    bbb={}
+    for i in range(lll):
+        bbb[str(i)] = np.array(ref_diff[i:len(ref_diff) - lll + i])
+        # bbb[str(i)] = np.array(ref_diff[lll-i:len(ref_diff) -i])
+    gg = np.zeros(len(ref_diff) - lll, int)
+    for k in bbb.keys():
+        gg = gg + bbb[k]
+    gg2=np.where((he + 5 > gg)& (gg> he - 5))[0]
+    gg2=gg2+lll
+    return gg2
+
+
+
+def qiuhelong(ref_diff,read_diff):
+    he = sum(read_diff)
+    lll=len(read_diff)
+    if lll>4:
+        jiji=np.append(ziji1(lll, ref_diff,he),ziji1(lll-1, ref_diff,he))
+        jiji=np.append(jiji,ziji1(lll-2, ref_diff,he))
+        jiji = np.append(jiji, ziji1(lll - 3, ref_diff,he))
+        jiji = np.append(jiji, ziji1(lll - 4, ref_diff,he))
+        jiji = np.append(jiji, ziji1(lll +1, ref_diff,he))
+        jiji = np.append(jiji, ziji1(lll +2, ref_diff,he))
+        jiji = np.append(jiji, ziji1(lll +3, ref_diff,he))
+        jiji = np.append(jiji, ziji1(lll +4, ref_diff,he))
+        jijiuu=np.unique(jiji)
+        return jijiuu
+    elif lll==4:
+        jiji = np.append(ziji1(lll, ref_diff,he), ziji1(lll - 1, ref_diff,he))
+        jiji = np.append(jiji, ziji1(lll - 2, ref_diff,he))
+        jiji = np.append(jiji, ziji1(lll - 3, ref_diff,he))
+        jiji = np.append(jiji, ziji1(lll + 1, ref_diff,he))
+        jiji = np.append(jiji, ziji1(lll + 2, ref_diff,he))
+        jiji = np.append(jiji, ziji1(lll + 3, ref_diff,he))
+        jiji = np.append(jiji, ziji1(lll + 4, ref_diff,he))
+        jijiuu = np.unique(jiji)
+        return jijiuu
+    elif lll==3:
+        jiji = np.append(ziji1(lll, ref_diff,he), ziji1(lll - 1, ref_diff,he))
+        jiji = np.append(jiji, ziji1(lll - 2, ref_diff,he))
+        jiji = np.append(jiji, ziji1(lll + 1, ref_diff,he))
+        jiji = np.append(jiji, ziji1(lll + 2, ref_diff,he))
+        jiji = np.append(jiji, ziji1(lll + 3, ref_diff,he))
+        jiji = np.append(jiji, ziji1(lll + 4, ref_diff,he))
+        jijiuu = np.unique(jiji)
+        return jijiuu
+    elif lll==2:
+        jiji = np.append(ziji1(lll, ref_diff,he), ziji1(lll - 1, ref_diff,he))
+        jiji = np.append(jiji, ziji1(lll + 1, ref_diff,he))
+        jiji = np.append(jiji, ziji1(lll + 2, ref_diff,he))
+        jiji = np.append(jiji, ziji1(lll + 3, ref_diff,he))
+        jiji = np.append(jiji, ziji1(lll + 4, ref_diff,he))
+        jijiuu = np.unique(jiji)
+        return jijiuu
+    elif lll==1:
+        jiji = np.append(ziji1(lll, ref_diff,he), ziji1(lll + 1, ref_diff,he))
+        jiji = np.append(jiji, ziji1(lll + 2, ref_diff,he))
+        jiji = np.append(jiji, ziji1(lll + 3, ref_diff,he))
+        jiji = np.append(jiji, ziji1(lll + 4, ref_diff,he))
+        jijiuu = np.unique(jiji)
+        return jijiuu
+    elif lll==0:
+        return np.array([])
+
+
+def qiuhesm(ref_diff,read_diff):
+    he = sum(read_diff)
+    lll = len(read_diff)
+    if lll > 4:
+        jiji = np.append(ziji2(lll, ref_diff,he), ziji2(lll - 1, ref_diff,he))
+        jiji = np.append(jiji, ziji2(lll - 2, ref_diff,he))
+        jiji = np.append(jiji, ziji2(lll - 3, ref_diff,he))
+        jiji = np.append(jiji, ziji2(lll - 4, ref_diff,he))
+        jiji = np.append(jiji, ziji2(lll + 1, ref_diff,he))
+        jiji = np.append(jiji, ziji2(lll + 2, ref_diff,he))
+        jiji = np.append(jiji, ziji2(lll + 3, ref_diff,he))
+        jiji = np.append(jiji, ziji2(lll + 4, ref_diff,he))
+        jijiuu = np.unique(jiji)
+        return jijiuu
+    elif lll==4:
+        jiji = np.append(ziji2(lll, ref_diff,he), ziji2(lll - 1, ref_diff,he))
+        jiji = np.append(jiji, ziji2(lll - 2, ref_diff,he))
+        jiji = np.append(jiji, ziji2(lll - 3, ref_diff,he))
+        jiji = np.append(jiji, ziji2(lll + 1, ref_diff,he))
+        jiji = np.append(jiji, ziji2(lll + 2, ref_diff,he))
+        jiji = np.append(jiji, ziji2(lll + 3, ref_diff,he))
+        jiji = np.append(jiji, ziji2(lll + 4, ref_diff,he))
+        jijiuu = np.unique(jiji)
+        return jijiuu
+    elif lll==3:
+        jiji = np.append(ziji2(lll, ref_diff,he), ziji2(lll - 1, ref_diff,he))
+        jiji = np.append(jiji, ziji2(lll - 2, ref_diff,he))
+        jiji = np.append(jiji, ziji2(lll + 1, ref_diff,he))
+        jiji = np.append(jiji, ziji2(lll + 2, ref_diff,he))
+        jiji = np.append(jiji, ziji2(lll + 3, ref_diff,he))
+        jiji = np.append(jiji, ziji2(lll + 4, ref_diff,he))
+        jijiuu = np.unique(jiji)
+        return jijiuu
+    elif lll==2:
+        jiji = np.append(ziji2(lll, ref_diff,he), ziji2(lll - 1, ref_diff,he))
+        jiji = np.append(jiji, ziji2(lll + 1, ref_diff,he))
+        jiji = np.append(jiji, ziji2(lll + 2, ref_diff,he))
+        jiji = np.append(jiji, ziji2(lll + 3, ref_diff,he))
+        jiji = np.append(jiji, ziji2(lll + 4, ref_diff,he))
+        jijiuu = np.unique(jiji)
+        return jijiuu
+    elif lll==1:
+        jiji = np.append(ziji2(lll, ref_diff,he), ziji2(lll + 1, ref_diff,he))
+        jiji = np.append(jiji, ziji2(lll + 2, ref_diff,he))
+        jiji = np.append(jiji, ziji2(lll + 3, ref_diff,he))
+        jiji = np.append(jiji, ziji2(lll + 4, ref_diff,he))
+        jijiuu = np.unique(jiji)
+        return jijiuu
+    elif lll==0:
+        return np.array([])
+
+
+
+# hhll=max(testdiff.values(), key=len)
+# list_of_value = list(testdiff.values())
+# position = list_of_value.index(hhll)
+# agct=threename[position]
+#
+#
+# reftest={}
+# for i in threename:
+#     linshi=qiuhesm(refdiff[i],testdiff[i])
+#     reftest[i]=linshi
+#
+# linshi = qiuhelong(refdiff[agct], testdiff[agct])
+# reftest[agct]=linshi
+# print("求和处理完毕")
+#
+# zhuanhuan={}
+# for i in threename:
+#     zhuanhuan[i] = []
+# for i in threename:
+#     for j in reftest[i]:
+#         ll=refPOS[i][int(j)]
+#         zhuanhuan[i].append(ll)
+#
+# zhuanhuan[agct]=[]
+# for j in reftest[agct]:
+#     ll = refPOS[agct][int(j)]
+#     zhuanhuan[agct].append(ll)
+#
+# print("转换完毕")
+#
+#
+#
+#
+#
+
+
+
+
+
+
+
+
+
+#
+#
+#
+# import numpy as np
+# def qiuhe(ref_diff,read_diff):
+#     he = sum(read_diff)
+#     result1 = []
+#     kk1 = [i for i in range(len(ref_diff)-len(read_diff)+4) if he + 5 > sum(ref_diff[i:i + len(read_diff) - 4]) > he - 5]
+#     kk2 = [i for i in range(len(ref_diff)-len(read_diff)+3) if he + 5 > sum(ref_diff[i:i + len(read_diff) - 3]) > he - 5]
+#     kk3 = [i for i in range(len(ref_diff)-len(read_diff)+2) if he + 5 > sum(ref_diff[i:i + len(read_diff) - 2]) > he - 5]
+#     kk4 = [i for i in range(len(ref_diff)-len(read_diff)+1) if he + 5 > sum(ref_diff[i:i + len(read_diff) - 1]) > he - 5]
+#     kk5 = [i for i in range(len(ref_diff)-len(read_diff)) if he + 5 > sum(ref_diff[i:i + len(read_diff)]) > he - 5]
+#     kk6 = [i for i in range(len(ref_diff)-len(read_diff)-1) if he + 5 > sum(ref_diff[i:i + len(read_diff) +1]) > he - 5]
+#     kk7 = [i for i in range(len(ref_diff)-len(read_diff)-2) if he + 5 > sum(ref_diff[i:i + len(read_diff) +2]) > he - 5]
+#     kk8 = [i for i in range(len(ref_diff)-len(read_diff)-3) if he + 5 > sum(ref_diff[i:i + len(read_diff) +3]) > he - 5]
+#     kk9 = [i for i in range(len(ref_diff)-len(read_diff)-4) if he + 5 > sum(ref_diff[i:i + len(read_diff) +4]) > he - 5]
+#
+#     kk1 = np.array(kk1)
+#     kk2 = np.array(kk2)
+#     kk3 = np.array(kk3)
+#     kk4 = np.array(kk4)
+#     kk5 = np.array(kk5)
+#     kk6 = np.array(kk6)
+#     kk7 = np.array(kk7)
+#     kk8 = np.array(kk8)
+#     kk9 = np.array(kk9)
+#
+#
+#     kkk = np.append(kk1, kk2)
+#     kkk = np.append(kkk, kk3)
+#     kkk = np.append(kkk, kk4)
+#     kkk = np.append(kkk, kk5)
+#     kkk = np.append(kkk, kk6)
+#     kkk = np.append(kkk, kk7)
+#     kkk = np.append(kkk, kk8)
+#     kkk = np.append(kkk, kk9)
+#
+#
+#
+#
+#
+#     kk11 = kk1 + len(read_diff) - 4
+#     kk21 = kk2 + len(read_diff) - 3
+#     kk31 = kk3 + len(read_diff) - 2
+#     kk41 = kk4 + len(read_diff) - 1
+#     kk51 = kk5 + len(read_diff)
+#     kk61 = kk6 + len(read_diff) +1
+#     kk71 = kk7 + len(read_diff) +2
+#     kk81 = kk8 + len(read_diff) +3
+#     kk91 = kk9 + len(read_diff) +4
+#
+#
+#     kkk2 = np.append(kk11, kk21)
+#     kkk2 = np.append(kkk2, kk31)
+#     kkk2 = np.append(kkk2, kk41)
+#     kkk2 = np.append(kkk2, kk51)
+#     kkk2 = np.append(kkk2, kk61)
+#     kkk2 = np.append(kkk2, kk71)
+#     kkk2 = np.append(kkk2, kk81)
+#     kkk2 = np.append(kkk2, kk91)
+#     # kkk = kkk.tolist()
+#     # kkk2 = kkk2.tolist()
+#
+#     result1 = [[kkk[i], kkk2[i]] for i in range(len(kkk))]
+#
+#     return result1
+#
+#
+#
+#
+#
+#
+#
+# def qiuhe(ref_diff,read_diff):
+#     he=sum(read_diff)
+#     result1=[]
+#     for i in range(len(ref_diff)):
+#         for j in range(len(read_diff) - 5, len(read_diff) + 5):
+#             if i + j > len(ref_diff):
+#                 continue
+#             if he+5 > sum(ref_diff[i:i + j]) > he-5:
+#                 result1.append([i,i+j])
+#     return result1
