@@ -1,0 +1,105 @@
+import numpy as np
+import random
+import time
+from ref import zzzref
+from randomread import randread
+from readposdiff import  readtq
+from qiuhe3 import qiuhexia
+from qiuhe3 import zzqiuhe
+
+myref, threename, refPOS, refdiff = zzzref("chr3")
+random_pos,random_read=randread(myref,300)            ##########调节长度
+testPOS,testdiff=readtq(threename,random_read)
+
+T1=time.perf_counter()
+#############################################################
+
+reftestxia=zzqiuhe(threename,refdiff,testdiff,5)#########允许前后错误个数，另外插入/缺失极限为4，函数内部可调整
+
+
+
+# reftestxia= {}                 ####################执行一半即可
+# for i in threename:
+#     linshi = qiuhexia(refdiff[i], testdiff[i],5)  #########允许前后错误个数，另外插入/缺失极限为4，函数内部可调整
+#     reftestxia[i] = linshi
+# reftestshang= {}
+# for i in threename:
+#     linshi = qiuhe(refdiff[i], testdiff[i])[1]
+#     reftestshang[i] = linshi
+agct = max(reftestxia, key=lambda x: len(reftestxia[x]))
+
+T3=time.perf_counter()
+print(T3-T1)
+print("求和处理完毕")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+zhuanhuanxia = {}
+for i in threename:
+    zhuanhuanxia[i] = []
+for i in threename:
+    for j in reftestxia[i]:
+        ll = refPOS[i][int(j)]
+        zhuanhuanxia[i].append(ll)
+
+# zhuanhuanshang = {}
+# for i in threename:
+#     zhuanhuanshang[i] = []
+# for i in threename:
+#     for j in reftestshang[i]:
+#         ll = refPOS[i][int(j)]
+#         zhuanhuanshang[i].append(ll)
+print("转换完毕")
+
+
+
+
+
+
+uu={}
+for i in threename:
+    c1=np.array(zhuanhuanxia[i])
+    c2=np.floor(c1/100)
+    c3=np.unique(c2)
+    c4=np.append(c3,c3+1)
+    c5 = np.append(c4, c3 + 2)
+    c6 = np.append(c5, c3 + 3)
+    c7=np.unique(c6)
+    c7=np.array(c7,int)
+    c8=c7.tolist()
+    uu[i]=c8
+
+uu3=list(uu.values())
+merge=sum(uu3,[])
+
+
+
+print("去重完毕")
+T2=time.perf_counter()
+
+
+print(T2-T1)
+
+from collections import  Counter
+ccc=Counter(merge)
+print(ccc.most_common())
+
+
+
+
+
