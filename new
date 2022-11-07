@@ -1,0 +1,28 @@
+import numpy as np
+import random
+import time
+from collections import Counter
+from ref import zzzref
+from randomread import randread
+from readposdiff import  readtq
+from qiuhe3 import zzqiuhe
+from qiuhe3 import zhuanhuan
+from qiuhe3 import uni
+myref, threename, refPOS, refdiff = zzzref("chr")
+random_pos,random_read=randread(myref,150)            ##########调节长度
+testPOS,testdiff=readtq(threename,random_read)
+T1=time.perf_counter()
+
+
+
+
+
+if __name__ == '__main__':
+    reftestxia = zzqiuhe(threename, refdiff, testdiff, 5)  #########允许前后错误个数，另外插入/缺失极限为4，函数内部可调整
+    zhuanhuanxia = zhuanhuan(threename, refPOS, reftestxia)
+    merge = uni(threename, zhuanhuanxia)
+    ccc = Counter(merge)
+    print(ccc.most_common(35))
+    T2 = time.perf_counter()
+    print(T2 - T1)
+
